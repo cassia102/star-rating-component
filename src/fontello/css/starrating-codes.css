@@ -1,0 +1,6 @@
+
+.icon-star:before { content: '\e800'; } /* '' */
+.icon-link:before { content: '\e801'; } /* '' */
+.icon-star-empty:before { content: '\e802'; } /* '' */
+.icon-github-circled:before { content: '\f09b'; } /* '' */
+.icon-docs:before { content: '\f0c5'; } /* '' */
