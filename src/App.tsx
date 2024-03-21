@@ -13,10 +13,38 @@ function App() {
     4: "Thank you for your positive feedback! We're glad to know that you had a great experience and we appreciate your support.",
     5: "Excellent! We're thrilled to hear you had such a positive experience. Thank you for choosing our product/service."
   }
+  const [hovered, setHovered] = useState<{[key: number]: boolean}>({
+    1: false, 2: false, 3: false, 4: false, 5: false
+  });
 
   const handleStarClick = (rating: number) => {
     setStarRating(rating);
   };
+
+  const handleMouseEnter = (rating: number) => {
+    const updatedHovered = {...hovered}
+    starNumbers.forEach(item => {
+      if(rating > starRating && rating >= item) {
+        updatedHovered[item] = true;
+      }
+    });
+
+    setHovered(updatedHovered);
+  }
+
+  const handleMouseExit = () => {
+    setHovered(prevHovered => {
+      const nextHovered: {[key: number]: boolean} = {}
+      Object.keys(prevHovered).forEach(key => {
+        nextHovered[key] = false
+      })
+      return nextHovered
+    })
+  }
+
+  // this.setState(prevState => ({
+  //   isToggleOn: !prevState.isToggleOn
+  // }));
 
   return (
     <>    
@@ -25,8 +53,10 @@ function App() {
         {starNumbers.map((index) => (
           <i
             key={index}
-            className={`icon-star ${starRating >= index ? '' : 'is-empty'}`}
+            className={`icon-star icon-star-${index} ${starRating >= index ? 'active' : 'is-empty'} ${hovered[index] ? 'hovered' : ''}`}
             onClick={() => handleStarClick(index)}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={() => handleMouseExit(index)}
           ></i>
         ))}
       </div>
